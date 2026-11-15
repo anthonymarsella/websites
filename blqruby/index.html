@@ -12,15 +12,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,800&family=DM+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: one screen. Bleach-dyed black ground, the gem standing in front of a wall of type, two caution tapes across it. */
+/* Layout: one screen. Pink-and-red tie-dye on black, the gem standing in front of a wall of type, two caution tapes across it. */
 :root {
   color-scheme: dark;
   --ground: #0d0b0a;
   --ink: #f6ede0;
-  --soft: #f6ede0b8;
+  --soft: #f6ede0db;
   --tape: #e2b93c;       /* caution tape / sunflower tee */
   --tape-ink: #0d0b0a;
-  --rust: #e27c3c;
+  --rust: #ff4f8b;
   --display: "Bricolage Grotesque", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
   --mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --gutter-l: max(20px, env(safe-area-inset-left, 0px));
@@ -47,12 +47,12 @@ h1, p { margin: 0; }
   display: grid;
   grid-template-rows: auto 1fr auto;
   overflow: hidden;
-  background: var(--ground) url("assets/bleach.svg") center / cover no-repeat;
+  background: var(--ground) url("assets/dye-pink.svg") center / cover no-repeat;
   isolation: isolate;
 }
 .page::before {  /* darken the dye so the white logos hold */
   content: ""; position: absolute; inset: 0; z-index: -1;
-  background: radial-gradient(ellipse at 50% 45%, #0d0b0a8c 0%, #0d0b0acc 70%, #0d0b0ae6 100%);
+  background: radial-gradient(ellipse at 50% 45%, #0d0b0a33 0%, #0d0b0a59 65%, #0d0b0a99 100%);
 }
 .label { font: 500 .74rem/1.3 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
 
@@ -103,7 +103,7 @@ h1, p { margin: 0; }
 @keyframes run { to { transform: translateX(-50%); } }
 
 .bottom { padding-block: 1.25rem 1.5rem; align-items: end; }
-.pitch { display: grid; gap: .5rem; max-width: 34rem; }
+.pitch { display: grid; gap: .5rem; max-width: 34rem; text-shadow: 0 1px 14px #0d0b0a, 0 0 3px #0d0b0a; }
 .pitch h1 { font: 800 clamp(1.7rem, 4.5vw, 2.6rem)/1 var(--display); font-stretch: 80%; text-transform: uppercase; text-wrap: balance; }
 .pitch p { color: var(--soft); font-size: .9rem; }
 .btn {
@@ -142,8 +142,8 @@ h1, p { margin: 0; }
       <span>We’ll be back</span><span>Providence, RI</span><span>BLQRUBY</span><span>Streetwear fashion</span><span>We’ll be back</span><span>Providence, RI</span><span>BLQRUBY</span><span>Streetwear fashion</span>
     </div></div>
     <div class="tape two" aria-hidden="true"><div>
-      <span>DM to order</span><span>@blqruby</span><span>Do not cross</span><span>Coming soon</span><span>DM to order</span><span>@blqruby</span><span>Do not cross</span><span>Coming soon</span>
-      <span>DM to order</span><span>@blqruby</span><span>Do not cross</span><span>Coming soon</span><span>DM to order</span><span>@blqruby</span><span>Do not cross</span><span>Coming soon</span>
+      <span>DM to order</span><span>@blqruby</span><span>Pre-orders open</span><span>Coming soon</span><span>DM to order</span><span>@blqruby</span><span>Pre-orders open</span><span>Coming soon</span>
+      <span>DM to order</span><span>@blqruby</span><span>Pre-orders open</span><span>Coming soon</span><span>DM to order</span><span>@blqruby</span><span>Pre-orders open</span><span>Coming soon</span>
     </div></div>
   </div>
 
