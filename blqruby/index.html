@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BLQRUBY</title>
+<meta name="description" content="BLQRUBY — streetwear from Providence. Bleach-dyed and ice-dyed pieces with painted panels. DM to order.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&family=Rock+Salt&display=swap">
+<style>
+/* Layout: one loud bleach-dyed hero, then a quiet concrete floor — pieces grid, a film contact sheet, and a DM order slip. */
+:root {
+  --ground: #d3d1cc;      /* warehouse concrete / product-shot backdrop */
+  --surface: #e3e1dc;
+  --ink: #15110e;         /* washed black cotton */
+  --muted: #5a544e;
+  --line: #15110e2e;
+  --rust: #ad4c18;        /* bleach on black */
+  --ice: #1c68a0;         /* ice tie-dye */
+  --mustard: #c99a1c;     /* sunflower tee */
+  --on-accent: #fbf6ee;
+  /* the dyed garment and the film strip keep their own colours in both themes */
+  --dye-ground: #15110e;
+  --dye-ink: #f6ede0;
+  --dye-soft: #f6ede0c7;
+  --film: #0d0b0a;
+  --film-ink: #e8a24a;
+
+  --display: "Bricolage Grotesque", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --scrawl: "Rock Salt", "Bradley Hand", "Comic Sans MS", cursive;
+
+  --gutter-l: max(20px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+  --wrap: 1180px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #171310; --surface: #221d19; --ink: #ede7de; --muted: #a79d92; --line: #ede7de2b;
+    --rust: #e27c3c; --ice: #74b8e6; --mustard: #e4bc48; --on-accent: #15110e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #171310; --surface: #221d19; --ink: #ede7de; --muted: #a79d92; --line: #ede7de2b;
+  --rust: #e27c3c; --ice: #74b8e6; --mustard: #e4bc48; --on-accent: #15110e;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font: 400 1rem/1.55 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+h1, h2, h3, p, ul, ol, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+:focus-visible { outline: 3px solid var(--ice); outline-offset: 3px; }
+
+.wrap {
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-left: var(--gutter-l);
+  padding-right: var(--gutter-r);
+}
+.label {
+  font: 500 .75rem/1.2 var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.h2 {
+  font: 800 clamp(2.2rem, 6vw, 4rem)/.92 var(--display);
+  font-stretch: 75%;
+  letter-spacing: -.015em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.lede { max-width: 46ch; color: var(--muted); font-size: 1.05rem; }
+.band { padding-block: clamp(3.5rem, 8vw, 6.5rem); }
+.band-head { display: grid; gap: .9rem; margin-bottom: clamp(1.75rem, 4vw, 3rem); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  min-height: 3rem; padding: .7rem 1.25rem;
+  border: 2px solid var(--ink); border-radius: 0;
+  background: var(--ink); color: var(--ground);
+  font: 500 .82rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
+  cursor: pointer;
+  transition: transform .12s ease, background .12s ease, color .12s ease;
+}
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--rust); }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn.small { min-height: 2.6rem; padding: .5rem .9rem; font-size: .74rem; }
+
+/* ---------- hero: the dyed garment ---------- */
+.hero {
+  background: var(--dye-ground) url("assets/bleach.svg") center / cover no-repeat;
+  color: var(--dye-ink);
+}
+.topbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding-block: 1.1rem;
+}
+.brand { display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; font: 800 1.15rem/1 var(--display); letter-spacing: .04em; }
+.brand svg { width: 1.7rem; height: 2.1rem; }
+.nav { display: flex; flex-wrap: wrap; gap: .25rem 1.4rem; }
+.nav a { font: 500 .78rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; padding-block: .6rem; }
+.nav a:hover { text-decoration: underline; text-underline-offset: .35em; }
+
+.hero-grid {
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  gap: clamp(1.5rem, 4vw, 4rem); align-items: center;
+  padding-block: clamp(1.5rem, 5vw, 4rem) clamp(3rem, 7vw, 5.5rem);
+}
+.hero-copy { display: grid; gap: 1.4rem; justify-items: start; min-width: 0; }
+.hero h1 {
+  font: 800 clamp(6rem, 15.5vw, 12.5rem)/.87 var(--display);
+  font-stretch: 75%;
+  letter-spacing: -.035em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 30px #15110e99;
+}
+.hero h1 span { display: block; }
+.hero p { max-width: 40ch; font-size: 1.1rem; color: var(--dye-soft); text-shadow: 0 1px 12px #15110ecc; }
+.hero .label { color: var(--dye-ink); }
+.hero-cta { display: flex; flex-wrap: wrap; gap: .75rem; }
+.hero .btn { border-color: var(--dye-ink); background: var(--dye-ink); color: var(--dye-ground); }
+.hero .btn.ghost { background: #15110e99; color: var(--dye-ink); }
+
+.prints { position: relative; aspect-ratio: 1 / 1.08; max-width: 100%; }
+.print {
+  position: absolute; width: 56%;
+  padding: 2.2% 2.2% 9%;
+  background: #f4efe6; color: #15110e;
+  box-shadow: 0 18px 40px #0009;
+}
+.print img { width: 100%; aspect-ratio: 709 / 1000; object-fit: cover; }
+.print figcaption { position: absolute; left: 6%; bottom: 2.5%; font: 400 clamp(.5rem, 1.1vw, .72rem)/1 var(--scrawl); }
+.print.a { left: 0; top: 6%; transform: rotate(-6deg); }
+.print.b { right: 0; top: 0; transform: rotate(4deg); }
+.print.c { left: 22%; top: 30%; transform: rotate(-1.5deg); z-index: 2; }
+
+/* ---------- ticker ---------- */
+.ticker { overflow: hidden; background: var(--ink); color: var(--ground); border-block: 2px solid var(--ink); }
+.ticker-track { display: flex; width: max-content; animation: slide 38s linear infinite; }
+.ticker ul { display: flex; flex: none; }
+.ticker li { padding: .8rem 1.1rem; white-space: nowrap; font: 500 .8rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+.ticker li::after { content: "✕"; margin-left: 2.2rem; color: var(--mustard); }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+/* ---------- pieces ---------- */
+.pieces { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(1rem, 2.2vw, 1.75rem); }
+.piece { grid-column: span 2; display: grid; grid-template-rows: auto 1fr; gap: .9rem; min-width: 0; }
+.piece.wide { grid-column: span 3; }
+.piece-img { background: var(--surface); overflow: hidden; }
+.piece-img img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; transition: transform .5s ease; }
+.piece.wide .piece-img img { aspect-ratio: 5 / 6; }
+.piece:hover .piece-img img { transform: scale(1.03); }
+.piece-body { display: grid; gap: .55rem; align-content: start; }
+.piece h3 { font: 800 1.55rem/1 var(--display); font-stretch: 80%; text-transform: uppercase; letter-spacing: -.005em; }
+.piece p { color: var(--muted); font-size: .95rem; max-width: 42ch; }
+.piece .tag { color: var(--rust); }
+.piece-buy { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; margin-top: .35rem; }
+.field {
+  min-height: 2.6rem; padding: .4rem .7rem;
+  border: 2px solid var(--ink); border-radius: 0;
+  background: var(--ground); color: var(--ink);
+  font: 500 .78rem/1.2 var(--mono); letter-spacing: .06em;
+}
+
+/* ---------- contact sheet ---------- */
+.sheet { background: var(--film); color: var(--film-ink); }
+.sheet .h2 { color: #f6ede0; }
+.sheet .lede { color: #f6ede0b3; }
+.strip { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-color: var(--film-ink) var(--film); }
+.strip ol {
+  display: flex; gap: 0; width: max-content;
+  padding-left: var(--gutter-l); padding-right: var(--gutter-r);
+  background:
+    repeating-linear-gradient(90deg, #f6ede0 0 14px, transparent 14px 34px) 0 12px / 100% 12px repeat-x,
+    repeating-linear-gradient(90deg, #f6ede0 0 14px, transparent 14px 34px) 0 calc(100% - 12px) / 100% 12px repeat-x;
+}
+.frame { flex: none; width: min(64vw, 300px); padding: 44px 9px 44px; position: relative; }
+.frame img { width: 100%; aspect-ratio: 709 / 1156; object-fit: cover; }
+.frame figcaption { position: absolute; left: 12px; right: 12px; bottom: 26px; display: flex; justify-content: space-between; font: 500 .66rem/1 var(--mono); letter-spacing: .12em; }
+.frame .no { position: absolute; left: 12px; top: 28px; font: 500 .66rem/1 var(--mono); letter-spacing: .12em; }
+.strip-hint { margin-top: 1rem; color: #f6ede099; }
+
+/* ---------- order ---------- */
+.order-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(1.5rem, 5vw, 4.5rem); align-items: start; }
+.steps { display: grid; gap: 1.4rem; counter-reset: step; margin-top: 1.75rem; }
+.steps li { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); gap: .9rem; counter-increment: step; }
+.steps li::before { content: counter(step); font: 800 2.4rem/.9 var(--display); font-stretch: 75%; color: var(--rust); }
+.steps h3 { font: 600 1.05rem/1.3 var(--body); }
+.steps p { color: var(--muted); font-size: .95rem; }
+
+.slip { background: var(--surface); border: 2px solid var(--ink); padding: clamp(1.1rem, 3vw, 1.9rem); display: grid; gap: 1.1rem; box-shadow: 8px 8px 0 var(--ink); min-width: 0; }
+.slip-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; border-bottom: 2px dashed var(--line); padding-bottom: .9rem; }
+.slip-head strong { font: 800 1.5rem/1 var(--display); font-stretch: 80%; text-transform: uppercase; }
+.slip-list { display: grid; gap: .5rem; }
+.slip-list li { display: flex; justify-content: space-between; align-items: center; gap: .75rem; font: 500 .85rem/1.3 var(--mono); }
+.slip-list button { border: 0; background: none; color: var(--muted); font: 500 .72rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; text-decoration: underline; cursor: pointer; padding: .5rem 0; }
+.slip-empty { color: var(--muted); font: 400 .85rem/1.5 var(--mono); }
+.slip label { display: grid; gap: .4rem; }
+.slip textarea { width: 100%; min-height: 4.2rem; resize: vertical; text-transform: none; letter-spacing: 0; font-size: .85rem; line-height: 1.5; }
+.msg { margin: 0; padding: .9rem 1rem; background: var(--ground); border-left: 4px solid var(--ice); font: 400 .85rem/1.6 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+.slip-actions { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+.slip-note { color: var(--muted); font-size: .85rem; }
+
+/* ---------- events + footer ---------- */
+.events { border-top: 2px solid var(--ink); }
+.event-row { display: grid; grid-template-columns: 9rem minmax(0, 1fr) auto; gap: 1rem 2rem; align-items: baseline; padding-block: 1.3rem; border-bottom: 1px solid var(--line); }
+.event-row h3 { font: 800 clamp(1.5rem, 4vw, 2.4rem)/1 var(--display); font-stretch: 80%; text-transform: uppercase; }
+.event-row .label { color: var(--muted); }
+.event-row .when { color: var(--ice); }
+
+.foot { background: var(--dye-ground) url("assets/bleach.svg") center 70% / cover no-repeat; color: var(--dye-ink); }
+.foot-in { display: grid; gap: 2rem; padding-block: clamp(3rem, 7vw, 5rem); }
+.foot-word { font: 800 clamp(3.4rem, 17vw, 13rem)/.8 var(--display); font-stretch: 75%; letter-spacing: -.035em; text-shadow: 0 2px 30px #15110e99; }
+.foot-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 2rem; }
+.foot-row a { text-underline-offset: .3em; }
+.scrawl { font: 400 .9rem/1.6 var(--scrawl); }
+
+@media (max-width: 860px) {
+  .hero-grid, .order-grid { grid-template-columns: minmax(0, 1fr); }
+  .prints { max-width: 30rem; }
+  .piece, .piece.wide { grid-column: span 3; }
+  .event-row { grid-template-columns: minmax(0, 1fr); gap: .35rem; }
+}
+@media (max-width: 520px) {
+  .piece, .piece.wide { grid-column: 1 / -1; }
+  .nav { gap: .1rem 1rem; }
+  .nav a[data-hide] { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .ticker-track { animation: none; }
+  .btn, .piece-img img { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="topbar">
+      <a class="brand" href="#top" aria-label="BLQRUBY home">
+        <svg viewBox="0 0 34 42" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11 2 2 36l15 4 14-10L18 26 11 2Zm0 0 6 38M11 2l20 28M2 36l16-10M7 30.5l11 4.2M12.5 28.5l8.5 8.7M17 40l1-14"/>
+        </svg>
+        BLQRUBY
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="#pieces">Pieces</a>
+        <a href="#lookbook" data-hide>Lookbook</a>
+        <a href="#events" data-hide>Events</a>
+        <a href="#order">Order</a>
+      </nav>
+    </div>
+
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="label">Streetwear fashion · Providence, RI</span>
+        <h1><span>BLQ</span><span>RUBY</span></h1>
+        <p>Bleached, ice-dyed and printed with our own artwork. Pick a piece, send a DM, wear it out.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#pieces">See the pieces</a>
+          <a class="btn ghost" href="#order">DM to order</a>
+        </div>
+      </div>
+      <div class="prints" aria-label="Photos from BLQRUBY shoots">
+        <figure class="print a"><img src="assets/look-03-cart.jpg" alt="Model in a bleach-dyed crewneck and leopard bucket hat, sitting in a shopping cart" width="1000" height="1630"><figcaption>bleach crew</figcaption></figure>
+        <figure class="print b"><img src="assets/look-01-ice-dye.jpg" alt="Model in an ice-dyed hoodie under a denim jacket, in front of an Ice Cold Beer sign" width="1000" height="1630"><figcaption>ice dye</figcaption></figure>
+        <figure class="print c"><img src="assets/look-07-duo.jpg" alt="Two friends in bleach-dyed crewnecks sharing a shopping cart" width="1000" height="1630"><figcaption>the crew</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <ul><li>DM to order</li><li>Providence, RI</li><li>Bleach dye</li><li>Ice dye</li><li>Art on cotton</li><li>@blqruby</li></ul>
+    <ul><li>DM to order</li><li>Providence, RI</li><li>Bleach dye</li><li>Ice dye</li><li>Art on cotton</li><li>@blqruby</li></ul>
+    <ul><li>DM to order</li><li>Providence, RI</li><li>Bleach dye</li><li>Ice dye</li><li>Art on cotton</li><li>@blqruby</li></ul>
+    <ul><li>DM to order</li><li>Providence, RI</li><li>Bleach dye</li><li>Ice dye</li><li>Art on cotton</li><li>@blqruby</li></ul>
+  </div>
+</div>
+
+<main>
+  <section class="band" id="pieces">
+    <div class="wrap">
+      <div class="band-head">
+        <span class="label">The pieces</span>
+        <h2 class="h2">Dyed, printed, yours.</h2>
+        <p class="lede">Choose a size and add a piece to your order slip. We confirm price and availability in your DMs.</p>
+      </div>
+
+      <div class="pieces">
+        <article class="piece wide" data-piece="Bleach Crew">
+          <div class="piece-img"><img src="assets/look-03-cart.jpg" alt="Bleach-dyed black and rust crewneck with a painted art panel on the chest" width="1000" height="1630" loading="lazy" style="object-position: 50% 42%"></div>
+          <div class="piece-body">
+            <span class="label tag">Bleach dye</span>
+            <h3>Bleach Crew</h3>
+            <p>Black crewneck bleached to rust, with a painted panel on the chest. The dye lands differently on every one.</p>
+            <div class="piece-buy">
+              <select class="field" id="size-bleach-crew" aria-label="Size for Bleach Crew"><option>S</option><option selected>M</option><option>L</option><option>XL</option></select>
+              <button class="btn small" type="button" data-add>Add to order slip</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="piece wide" data-piece="Ice Dye Hoodie">
+          <div class="piece-img"><img src="assets/look-01-ice-dye.jpg" alt="Blue and white ice-dyed hoodie worn under a denim jacket" width="1000" height="1630" loading="lazy" style="object-position: 50% 40%"></div>
+          <div class="piece-body">
+            <span class="label tag">Ice dye</span>
+            <h3>Ice Dye Hoodie</h3>
+            <p>Blue-and-white ice dye with the script logo across the chest. Sits well under denim.</p>
+            <div class="piece-buy">
+              <select class="field" id="size-ice-dye-hoodie" aria-label="Size for Ice Dye Hoodie"><option>S</option><option selected>M</option><option>L</option><option>XL</option></select>
+              <button class="btn small" type="button" data-add>Add to order slip</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="piece" data-piece="She Loves Me Not Tee">
+          <div class="piece-img"><img src="assets/piece-sunflower-tee.jpg" alt="Black tee with a large yellow sunflower and the words she loves me not" width="1000" height="1020" loading="lazy"></div>
+          <div class="piece-body">
+            <span class="label tag">Graphic tee</span>
+            <h3>She Loves Me Not</h3>
+            <p>Black tee, oversized sunflower on the back, typewriter line down the side.</p>
+            <div class="piece-buy">
+              <select class="field" id="size-she-loves-me-not" aria-label="Size for She Loves Me Not Tee"><option>S</option><option selected>M</option><option>L</option><option>XL</option></select>
+              <button class="btn small" type="button" data-add>Add to order slip</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="piece" data-piece="Providence Hoodie">
+          <div class="piece-img"><img src="assets/piece-providence-hoodie.jpg" alt="Charcoal hoodie with a Providence skyline and red sun printed on the front pocket" width="1000" height="974" loading="lazy"></div>
+          <div class="piece-body">
+            <span class="label tag">Hometown</span>
+            <h3>Providence Hoodie</h3>
+            <p>Charcoal hoodie with the skyline and a red sun on the pocket. Script logo on the chest.</p>
+            <div class="piece-buy">
+              <select class="field" id="size-providence-hoodie" aria-label="Size for Providence Hoodie"><option>S</option><option selected>M</option><option>L</option><option>XL</option></select>
+              <button class="btn small" type="button" data-add>Add to order slip</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="piece" data-piece="Juicy Tee">
+          <div class="piece-img"><img src="assets/piece-juicy-tee.jpg" alt="Salmon, white and mustard Juicy tees on wooden hangers" width="1000" height="1012" loading="lazy"></div>
+          <div class="piece-body">
+            <span class="label tag">Graphic tee</span>
+            <h3>Juicy Tee</h3>
+            <p>Hand-drawn lips graphic. Comes in salmon, white and mustard.</p>
+            <div class="piece-buy">
+              <select class="field" id="colour-juicy-tee" aria-label="Colour for Juicy Tee" data-colour><option>Salmon</option><option>White</option><option>Mustard</option></select>
+              <select class="field" id="size-juicy-tee" aria-label="Size for Juicy Tee"><option>S</option><option selected>M</option><option>L</option><option>XL</option></select>
+              <button class="btn small" type="button" data-add>Add to order slip</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band sheet" id="lookbook">
+    <div class="wrap">
+      <div class="band-head">
+        <span class="label">Lookbook · contact sheet</span>
+        <h2 class="h2">One roll, one warehouse.</h2>
+        <p class="lede">Shot on location with friends, shopping carts and a few cold ones.</p>
+      </div>
+    </div>
+    <div class="strip" tabindex="0" role="region" aria-label="Lookbook photos, scroll sideways">
+      <ol>
+        <li><figure class="frame"><span class="no">01</span><img src="assets/look-01-ice-dye.jpg" alt="Ice-dyed hoodie and denim jacket in front of a vintage Ice Cold Beer sign" width="1000" height="1630" loading="lazy"><figcaption><span>BLQ 400</span><span>1A</span></figcaption></figure></li>
+        <li><figure class="frame"><span class="no">02</span><img src="assets/look-02-fur.jpg" alt="Bleach-dyed hoodie under a faux fur coat with over-the-knee boots" width="1000" height="1630" loading="lazy"><figcaption><span>BLQ 400</span><span>2A</span></figcaption></figure></li>
+        <li><figure class="frame"><span class="no">03</span><img src="assets/look-03-cart.jpg" alt="Bleach crewneck and leopard bucket hat in a shopping cart" width="1000" height="1630" loading="lazy"><figcaption><span>BLQ 400</span><span>3A</span></figcaption></figure></li>
+        <li><figure class="frame"><span class="no">04</span><img src="assets/look-04-dice.jpg" alt="Four friends crouched over a dice game holding dollar bills" width="1000" height="1630" loading="lazy"><figcaption><span>BLQ 400</span><span>4A</span></figcaption></figure></li>
+        <li><figure class="frame"><span class="no">05</span><img src="assets/look-05-crew.jpg" alt="Bleach crewneck and leopard bucket hat, sitting cross-legged in a shopping cart" width="1000" height="1630" loading="lazy"><figcaption><span>BLQ 400</span><span>5A</span></figcaption></figure></li>
+        <li><figure class="frame"><span class="no">06</span><img src="assets/look-06-lollipop.jpg" alt="Hoodie and faux fur coat on a glitter inflatable chair with a lollipop" width="1000" height="1630" loading="lazy"><figcaption><span>BLQ 400</span><span>6A</span></figcaption></figure></li>
+        <li><figure class="frame"><span class="no">07</span><img src="assets/look-07-duo.jpg" alt="Two friends in bleach crewnecks sharing a shopping cart with canned drinks" width="1000" height="1630" loading="lazy"><figcaption><span>BLQ 400</span><span>7A</span></figcaption></figure></li>
+      </ol>
+    </div>
+    <div class="wrap"><p class="label strip-hint">Scroll the roll →</p></div>
+  </section>
+
+  <section class="band" id="order">
+    <div class="wrap order-grid">
+      <div>
+        <div class="band-head">
+          <span class="label">How to order</span>
+          <h2 class="h2">No cart. Just a DM.</h2>
+          <p class="lede">Every order goes through Instagram, so you talk to the people who made the piece.</p>
+        </div>
+        <ol class="steps">
+          <li><div><h3>Pick your pieces</h3><p>Choose a size and add each piece to the order slip.</p></div></li>
+          <li><div><h3>Copy the message and DM @blqruby</h3><p>The slip writes the message for you. Paste it into Instagram.</p></div></li>
+          <li><div><h3>We reply in the thread</h3><p>You get price, availability and how to pick up or ship.</p></div></li>
+        </ol>
+      </div>
+
+      <form class="slip" id="slip" aria-label="Order slip">
+        <div class="slip-head"><strong>Order slip</strong><span class="label" id="slip-count">0 pieces</span></div>
+        <ul class="slip-list" id="slip-list"></ul>
+        <p class="slip-empty" id="slip-empty">Nothing here yet. Add a piece from the grid above, or send a custom request below.</p>
+        <label for="slip-note"><span class="label">Anything else?</span>
+          <textarea class="field" id="slip-note" placeholder="Custom colour, pickup in Providence, a question…"></textarea>
+        </label>
+        <div><span class="label">Your DM</span></div>
+        <pre class="msg" id="slip-msg" tabindex="0"></pre>
+        <div class="slip-actions">
+          <button class="btn" type="button" id="slip-copy">Copy message</button>
+          <a class="btn ghost" href="https://ig.me/m/blqruby" target="_blank" rel="noopener">Open Instagram DM</a>
+        </div>
+        <p class="slip-note" id="slip-status" role="status">Nothing is charged here. Copy the message, then paste it in the DM.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="band events" id="events">
+    <div class="wrap">
+      <div class="band-head">
+        <span class="label">Events</span>
+        <h2 class="h2">Off the feed.</h2>
+      </div>
+      <div class="event-row">
+        <span class="label when">02.15.25</span>
+        <h3>Cotton &amp; Canvas</h3>
+        <span class="label">Past event</span>
+      </div>
+      <div class="event-row">
+        <span class="label when">Next</span>
+        <h3>To be announced</h3>
+        <a class="label" href="https://www.instagram.com/blqruby/" target="_blank" rel="noopener">Follow for dates →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="scrawl">see you out there.</p>
+    <div class="foot-word" aria-hidden="true">BLQRUBY</div>
+    <div class="foot-row label">
+      <span>Streetwear fashion · Providence, RI</span>
+      <span><a href="https://www.instagram.com/blqruby/" target="_blank" rel="noopener">Instagram</a> &nbsp;·&nbsp; <a href="https://www.threads.net/@blqruby" target="_blank" rel="noopener">Threads</a></span>
+      <span>DM to order</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var items = [];
+  var list = document.getElementById('slip-list');
+  var empty = document.getElementById('slip-empty');
+  var count = document.getElementById('slip-count');
+  var msg = document.getElementById('slip-msg');
+  var note = document.getElementById('slip-note');
+  var status = document.getElementById('slip-status');
+
+  function message() {
+    var lines = ['Hey BLQRUBY! I’d like to order:'];
+    if (items.length) items.forEach(function (i) { lines.push('• ' + i); });
+    else lines.push('• (add a piece, or describe what you want)');
+    var extra = note.value.trim();
+    if (extra) lines.push('', extra);
+    lines.push('', 'What’s the total and how do I pay?');
+    return lines.join('\n');
+  }
+
+  function render() {
+    list.textContent = '';
+    items.forEach(function (text, idx) {
+      var li = document.createElement('li');
+      var span = document.createElement('span');
+      span.textContent = text;
+      var rm = document.createElement('button');
+      rm.type = 'button';
+      rm.textContent = 'Remove';
+      rm.setAttribute('aria-label', 'Remove ' + text);
+      rm.addEventListener('click', function () { items.splice(idx, 1); render(); });
+      li.append(span, rm);
+      list.append(li);
+    });
+    empty.hidden = items.length > 0;
+    count.textContent = items.length + (items.length === 1 ? ' piece' : ' pieces');
+    msg.textContent = message();
+  }
+
+  document.querySelectorAll('[data-add]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var card = btn.closest('[data-piece]');
+      var colour = card.querySelector('[data-colour]');
+      var size = card.querySelector('select:not([data-colour])');
+      items.push(card.dataset.piece + (colour ? ' in ' + colour.value : '') + ', size ' + size.value);
+      render();
+      var old = btn.textContent;
+      btn.textContent = 'Added';
+      setTimeout(function () { btn.textContent = old; }, 1200);
+    });
+  });
+
+  note.addEventListener('input', render);
+  document.getElementById('slip').addEventListener('submit', function (e) { e.preventDefault(); });
+
+  document.getElementById('slip-copy').addEventListener('click', function () {
+    var text = message();
+    function selectIt() {
+      var r = document.createRange(); r.selectNodeContents(msg);
+      var s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      status.textContent = 'Couldn’t copy automatically. The message is selected — copy it, then open the DM.';
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        status.textContent = 'Copied. Open the Instagram DM and paste it.';
+      }, selectIt);
+    } else selectIt();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
