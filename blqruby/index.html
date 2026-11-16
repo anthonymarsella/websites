@@ -12,15 +12,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,800&family=DM+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: one screen. Pink-and-red tie-dye on black, the gem standing in front of a wall of type, two caution tapes across it. */
+/* Layout: one screen. Smoky grey-and-white dye on black with a teal splash, the gem standing in front of a wall of type, two caution tapes across it. */
 :root {
   color-scheme: dark;
-  --ground: #0d0b0a;
+  --ground: #0b0c0d;
   --ink: #f6ede0;
   --soft: #f6ede0db;
   --tape: #e2b93c;       /* caution tape / sunflower tee */
   --tape-ink: #0d0b0a;
-  --rust: #ff4f8b;
+  --rust: #35c9cf;
   --display: "Bricolage Grotesque", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
   --mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --gutter-l: max(20px, env(safe-area-inset-left, 0px));
@@ -47,7 +47,7 @@ h1, p { margin: 0; }
   display: grid;
   grid-template-rows: auto 1fr auto;
   overflow: hidden;
-  background: var(--ground) url("assets/dye-pink.svg") center / cover no-repeat;
+  background: var(--ground) url("assets/dye-smoke.svg") center / cover no-repeat;
   isolation: isolate;
 }
 .page::before {  /* darken the dye so the white logos hold */
